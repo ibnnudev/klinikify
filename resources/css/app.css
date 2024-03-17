@@ -3,3 +3,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* get nav aria label */
+nav[aria-label="Pagination Navigation"] {
+    @apply w-full;
+}
+
+.js-snackbar__message {
+    @apply text-sm;
+}

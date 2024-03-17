@@ -16,7 +16,7 @@
                         <x-input id="email" label="Email" name="email" type="email" :value="old('email')"
                             required />
                         <x-input id="password" label="Password" name="password" type="password" required />
-                        <x-primary-button type="submit">Masuk</x-primary-button>
+                        <x-primary-button type="submit" class="w-full">Masuk</x-primary-button>
                     </form>
                 </div>
             </div>

@@ -5,16 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class DoctorCategory extends Model
+class Role extends Model
 {
     use HasFactory;
+    protected $fillable = ['name'];
 
-    protected $fillable = [
-        'name'
-    ];
-
-    public function doctors()
+    public function users()
     {
-        return $this->hasMany(Doctor::class);
+        return $this->hasMany(User::class);
     }
 }

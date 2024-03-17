@@ -2,62 +2,55 @@
 
 namespace App\Http\Controllers;
 
+use App\Interfaces\DoctorCategoryInterface;
 use App\Models\DoctorCategory;
 use Illuminate\Http\Request;
 
 class DoctorCategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    private $doctorCategory;
+
+    public function __construct(DoctorCategoryInterface $doctorCategory)
     {
-        //
+        $this->doctorCategory = $doctorCategory;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    public function index()
+    {
+        $categories = $this->doctorCategory->getAll();
+        return view('admin.doctor_category.index', compact('categories'));
+    }
+
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         //
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(DoctorCategory $doctorCategory)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(DoctorCategory $doctorCategory)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, DoctorCategory $doctorCategory)
+    public function update($id, Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+        ]);
+
+        $this->doctorCategory->update($id, $request->all());
+        return redirect()->route('doctor-category.index')->with('success', 'Doctor Category Updated Successfully');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(DoctorCategory $doctorCategory)
     {
         //
