@@ -31,12 +31,18 @@ class DoctorCategoryRepository implements DoctorCategoryInterface
 
     public function store($data)
     {
-        return $this->doctorCategory->create(['name' => $data['name']]);
+        return $this->doctorCategory->create([
+            'name' => $data['name'],
+            'price' => $data['price']
+        ]);
     }
 
     public function update($id, $data)
     {
-        return $this->doctorCategory->find($id)->update(['name' => $data['name']]);
+        return $this->doctorCategory->find($id)->update([
+            'name' => $data['name'],
+            'price' => $data['price']
+        ]);
     }
 
     public function destroy($id)

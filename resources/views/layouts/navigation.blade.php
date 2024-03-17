@@ -28,6 +28,9 @@
                     <x-nav-link :href="route('doctor-category.index')" :active="request()->routeIs('doctor-category.*')">
                         {{ __('Kategori Dokter') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('reservation.index')" :active="request()->routeIs('reservation.*')">
+                        {{ __('Reservasi') }}
+                    </x-nav-link>
                 </div>
             </div>
 

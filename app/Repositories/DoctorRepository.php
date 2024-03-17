@@ -20,7 +20,7 @@ class DoctorRepository implements DoctorInterface
 
     public function getAll()
     {
-        return $this->doctor->with('user')->orderBy('id')->paginate(10);
+        return $this->doctor->with('user')->orderBy('id')->get();
     }
 
     public function getWithPagination()

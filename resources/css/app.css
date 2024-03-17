@@ -12,3 +12,8 @@ nav[aria-label="Pagination Navigation"] {
 .js-snackbar__message {
     @apply text-sm;
 }
+
+/* input type date icon change to dark */
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}

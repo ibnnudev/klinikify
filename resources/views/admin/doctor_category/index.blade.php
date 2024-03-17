@@ -1,11 +1,14 @@
 <x-app-layout>
 
-    <x-table id="doctorCategoryTable" label="Kategori" :data=$categories :columns="['Nama', '']" createModalId="add-modal">
+    <x-table id="doctorCategoryTable" label="Kategori" :data=$categories :columns="['Nama', 'Harga', '']" createModalId="add-modal">
         @forelse ($categories as $data)
             <tr class="border-b dark:border-gray-700">
                 <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                     {{ $data->name }}
                 </th>
+                <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    {{ number_format($data->price, 0, ',', '.') }}
+                </td>
                 <td class="px-4 py-3 flex items-center justify-end">
                     <button id="{{ $data->id }}-dropdown-button" data-dropdown-toggle="{{ $data->id }}-dropdown"
                         class="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
@@ -22,7 +25,7 @@
                             aria-labelledby="{{ $data->id }}-dropdown-button">
                             <li>
                                 <a href="#" data-modal-toggle="edit-modal" data-modal-target="edit-modal"
-                                    onclick="btnEdit({{ $data->id }}, '{{ $data->name }}')"
+                                    onclick="btnEdit({{ $data->id }}, '{{ $data->name }}', '{{ $data->price }}')"
                                     class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
                             </li>
                             <li>
@@ -45,6 +48,7 @@
         <form action="{{ route('doctor-category.store') }}" method="POST" class="space-y-6">
             @csrf
             <x-input id="name" label="Nama" name="name" type="text" required />
+            <x-input id="price" label="Harga" name="price" type="number" required />
             <x-primary-button type="submit">Simpan</x-primary-button>
         </form>
     </x-basic-modal>
@@ -54,6 +58,7 @@
             @csrf
             @method('PUT')
             <x-input id="name" label="Nama" name="name" type="text" required />
+            <x-input id="price" label="Harga" name="price" type="number" required />
             <x-primary-button type="submit">Simpan</x-primary-button>
         </form>
     </x-basic-modal>
@@ -62,13 +67,14 @@
 
     @push('js-internal')
         <script>
-            function btnEdit(id, name) {
+            function btnEdit(id, name, price) {
                 const modal = $('#edit-modal');
                 modal.find('.modal-title').text('Edit Kategori Dokter');
                 let url = "{{ route('doctor-category.update', ':id') }}";
                 url = url.replace(':id', id);
                 modal.find('form').attr('action', url);
                 modal.find('#name').val(name);
+                modal.find('#price').val(price);
             }
 
             function btnDelete(id, name) {

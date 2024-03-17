@@ -11,6 +11,7 @@ class DoctorCategory extends Model
 
     protected $fillable = [
         'name',
+        'price'
     ];
 
     public function doctors()

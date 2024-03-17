@@ -28,7 +28,10 @@ class DoctorCategoryController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate(['name' => 'required|unique:doctor_categories,name']);
+        $request->validate([
+            'name' => 'required|unique:doctor_categories,name',
+            'price' => 'required'
+        ]);
 
         $this->doctorCategory->store($request->all());
         return redirect()->route('doctor-category.index')->with('success', 'Kategori dokter baru berhasil dibuat!');
@@ -48,6 +51,7 @@ class DoctorCategoryController extends Controller
     {
         $request->validate([
             'name' => 'required',
+            'price' => 'required'
         ]);
 
         $this->doctorCategory->update($id, $request->all());
