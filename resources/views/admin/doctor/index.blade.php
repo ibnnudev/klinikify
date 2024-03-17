@@ -1,5 +1,5 @@
 <x-app-layout>
-    <x-table id="doctorTable" label="Kategori" :data=$doctors :columns="['Nama', 'Email', 'Umur', 'Gender', 'No Telefon', '']" createModalId="add-modal">
+    <x-table id="doctorTable" label="Kategori" :data=$doctors :columns="['Nama', 'Email', 'Umur', 'Gender', 'No Telefon', 'Kategori', '']" createModalId="add-modal">
         @forelse ($doctors as $data)
             <tr class="border-b dark:border-gray-700">
                 <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
@@ -16,6 +16,9 @@
                 </td>
                 <td class="px-6 py-4">
                     {{ $data->user->phone }}
+                </td>
+                <td class="px-6 py-4">
+                    {{ $data->doctorCategory->name }}
                 </td>
                 <td class="px-4 py-3 flex items-center justify-end">
                     <button id="{{ $data->id }}-dropdown-button" data-dropdown-toggle="{{ $data->id }}-dropdown"

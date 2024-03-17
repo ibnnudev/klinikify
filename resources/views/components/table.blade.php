@@ -47,9 +47,9 @@
                                 <tr>
                                     @foreach ($columns as $column)
                                         @if ($loop->first)
-                                            <th class="font-semibold p-2 pl-4">{{ $column }}</th>
+                                            <th class="font-semibold px-6 py-2 pl-4">{{ $column }}</th>
                                         @else
-                                            <th class="font-semibold p-2">{{ $column }}</th>
+                                            <th class="font-semibold py-2 px-6">{{ $column }}</th>
                                         @endif
                                     @endforeach
                                 </tr>

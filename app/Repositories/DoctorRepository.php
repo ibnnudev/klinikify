@@ -25,7 +25,7 @@ class DoctorRepository implements DoctorInterface
 
     public function getWithPagination()
     {
-        return $this->doctor->with('user')->orderBy('id')->paginate(10);
+        return $this->doctor->with('user', 'doctorCategory')->orderBy('id')->paginate(10);
     }
 
     public function getById($id)
