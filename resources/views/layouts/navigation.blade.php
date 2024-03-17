@@ -16,11 +16,12 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-
                     <x-nav-link :href="route('doctor.index')" :active="request()->routeIs('doctor.*')">
                         {{ __('Dokter') }}
                     </x-nav-link>
-
+                    <x-nav-link :href="route('patient.index')" :active="request()->routeIs('patient.*')">
+                        {{ __('Pasien') }}
+                    </x-nav-link>
                     <x-nav-link :href="route('doctor-category.index')" :active="request()->routeIs('doctor-category.*')">
                         {{ __('Kategori Dokter') }}
                     </x-nav-link>

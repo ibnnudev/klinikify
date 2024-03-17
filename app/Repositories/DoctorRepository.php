@@ -91,14 +91,10 @@ class DoctorRepository implements DoctorInterface
 
     public function destroy($id)
     {
-        DB::beginTransaction();
-        try {
-            $this->user->destroy($id);
-        } catch (\Throwable $th) {
-            throw $th;
-            DB::rollBack();
-        }
+        $user = $this->user->find($id);
+        $this->doctor->where('user_id', $id)->delete();
+        $user->delete();
 
-        DB::commit();
+        return true;
     }
 }

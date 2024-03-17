@@ -1,6 +1,6 @@
 <x-app-layout>
-    <x-table id="doctorTable" label="Dokter" :data=$doctors :columns="['Nama', 'Email', 'Umur', 'Gender', 'No Telefon', 'Kategori', '']" createModalId="add-modal">
-        @forelse ($doctors as $data)
+    <x-table id="patientTable" label="Pasien" :data=$patients :columns="['Nama', 'Email', 'Umur', 'Gender', 'No Telefon', 'Alergi', 'Penyakit Jantung', '']" createModalId="add-modal">
+        @forelse ($patients as $data)
             <tr class="border-b dark:border-gray-700">
                 <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                     {{ $data->user->name }}
@@ -18,7 +18,10 @@
                     {{ $data->user->phone }}
                 </td>
                 <td class="px-6 py-4">
-                    {{ $data->doctorCategory->name }}
+                    {{ $data->is_allergy ? 'Ya' : 'Tidak' }}
+                </td>
+                <td class="px-6 py-4">
+                    {{ $data->is_heart_disease ? 'Ya' : 'Tidak' }}
                 </td>
                 <td class="px-4 py-3 flex items-center justify-end">
                     <button id="{{ $data->id }}-dropdown-button" data-dropdown-toggle="{{ $data->id }}-dropdown"
@@ -50,13 +53,13 @@
             </tr>
         @empty
             <tr>
-                <td class="p-2 pl-4" colspan="{{ $doctors->count() }}">Data tidak ditemukan</td>
+                <td class="p-2 pl-4" colspan="{{ $patients->count() }}">Data tidak ditemukan</td>
             </tr>
         @endforelse
     </x-table>
 
-    <x-basic-modal id="add-modal" title="Tambah Dokter">
-        <form action="{{ route('doctor.store') }}" method="POST" class="space-y-6">
+    <x-basic-modal id="add-modal" title="Tambah Pasien">
+        <form action="{{ route('patient.store') }}" method="POST" class="space-y-6">
             @csrf
             <x-input id="name" label="Nama" name="name" type="text" required />
             <x-input id="email" label="Email" name="email" type="email" required />
@@ -66,17 +69,20 @@
             </x-select>
             <x-input id="age" label="Umur" name="age" type="number" required />
             <x-input id="phone" label="No Telefon" name="phone" type="text" required />
-            <x-select id="doctor_category_id" label="Kategori Dokter" name="doctor_category_id" required>
-                @foreach ($doctorCategories as $category)
-                    <option value="{{ $category->id }}">{{ $category->name }}</option>
-                @endforeach
+            <x-select id="is_allergy" label="Punya Alergi?" name="is_allergy" required>
+                <option value="1">Ya</option>
+                <option value="0">Tidak</option>
+            </x-select>
+            <x-select id="is_heart_disease" label="Punya Penyakit Jantung?" name="is_heart_disease" required>
+                <option value="1">Ya</option>
+                <option value="0">Tidak</option>
             </x-select>
             <x-primary-button type="submit">Simpan</x-primary-button>
         </form>
     </x-basic-modal>
 
-    <x-basic-modal id="edit-modal" title="Edit Dokter">
-        <form action="{{ route('doctor.store') }}" method="POST" class="space-y-6">
+    <x-basic-modal id="edit-modal" title="Edit Pasien">
+        <form action="{{ route('patient.store') }}" method="POST" class="space-y-6">
             @csrf
             @method('PUT')
             <input type="hidden" name="user_id" value="">
@@ -88,10 +94,13 @@
             </x-select>
             <x-input id="age" label="Umur" name="age" type="number" required />
             <x-input id="phone" label="No Telefon" name="phone" type="text" required />
-            <x-select id="doctor_category_id" label="Kategori Dokter" name="doctor_category_id" required>
-                @foreach ($doctorCategories as $category)
-                    <option value="{{ $category->id }}">{{ $category->name }}</option>
-                @endforeach
+            <x-select id="is_allergy" label="Punya Alergi?" name="is_allergy" required>
+                <option value="1">Ya</option>
+                <option value="0">Tidak</option>
+            </x-select>
+            <x-select id="is_heart_disease" label="Punya Penyakit Jantung?" name="is_heart_disease" required>
+                <option value="1">Ya</option>
+                <option value="0">Tidak</option>
             </x-select>
             <x-primary-button type="submit">Simpan</x-primary-button>
         </form>
@@ -103,7 +112,7 @@
         <script>
             function btnDelete(id, name) {
                 console.log(id, name);
-                let url = '{{ route('doctor.destroy', ':id') }}'.replace(':id', id);
+                let url = '{{ route('patient.destroy', ':id') }}'.replace(':id', id);
                 let modal = $('#delete-modal');
                 modal.find('form').attr('action', url);
                 modal.find('.deleted-item').text(name);
@@ -112,11 +121,11 @@
             function btnEdit(id) {
                 $.ajax({
                     type: "GET",
-                    url: "{{ route('doctor.show', ':id') }}".replace(':id', id),
+                    url: "{{ route('patient.show', ':id') }}".replace(':id', id),
                     dataType: "json",
                     success: function(response) {
                         let modal = $('#edit-modal');
-                        modal.find('form').attr('action', "{{ route('doctor.update', ':id') }}".replace(':id',
+                        modal.find('form').attr('action', "{{ route('patient.update', ':id') }}".replace(':id',
                             id));
                         modal.find('input[name="user_id"]').val(response.user.id);
                         modal.find('#name').val(response.user.name);
@@ -124,8 +133,9 @@
                         modal.find('#gender').val(response.user.gender);
                         modal.find('#age').val(response.user.age);
                         modal.find('#phone').val(response.user.phone);
-                        modal.find('#doctor_category_id').val(response.doctor_category_id);
-                        modal.find('form').attr('action', "{{ route('doctor.update', ':id') }}".replace(':id',
+                        modal.find('#is_allergy').val(response.is_allergy);
+                        modal.find('#is_heart_disease').val(response.is_heart_disease);
+                        modal.find('form').attr('action', "{{ route('patient.update', ':id') }}".replace(':id',
                             response.user.id));
                     }
                 });
