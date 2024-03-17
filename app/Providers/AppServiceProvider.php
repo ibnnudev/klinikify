@@ -11,6 +11,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(\App\Interfaces\DoctorCategoryInterface::class, \App\Repositories\DoctorCategoryRepository::class);
         $this->app->bind(\App\Interfaces\DoctorInterface::class, \App\Repositories\DoctorRepository::class);
         $this->app->bind(\App\Interfaces\PatientInterface::class, \App\Repositories\PatientRepository::class);
+        $this->app->bind(\App\Interfaces\MedicineInterface::class, \App\Repositories\MedicineRepository::class);
     }
 
     /**

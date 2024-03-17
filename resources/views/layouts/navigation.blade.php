@@ -22,6 +22,9 @@
                     <x-nav-link :href="route('patient.index')" :active="request()->routeIs('patient.*')">
                         {{ __('Pasien') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('medicine.index')" :active="request()->routeIs('medicine.*')">
+                        {{ __('Obat') }}
+                    </x-nav-link>
                     <x-nav-link :href="route('doctor-category.index')" :active="request()->routeIs('doctor-category.*')">
                         {{ __('Kategori Dokter') }}
                     </x-nav-link>
