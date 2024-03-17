@@ -1,6 +1,6 @@
 <x-app-layout>
 
-    <x-table id="doctorCategoryTable" label="Kategori" :data=$categories :columns="['Nama', '']">
+    <x-table id="doctorCategoryTable" label="Kategori" :data=$categories :columns="['Nama', '']" createModalId="add-modal">
         @forelse ($categories as $data)
             <tr class="border-b dark:border-gray-700">
                 <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
@@ -26,7 +26,8 @@
                                     class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
                             </li>
                             <li>
-                                <a href="#"
+                                <a href="#" data-modal-toggle="delete-modal" data-modal-target="delete-modal"
+                                    onclick="btnDelete({{ $data->id }}, '{{ $data->name }}')"
                                     class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Hapus</a>
                             </li>
                         </ul>
@@ -39,6 +40,15 @@
             </tr>
         @endforelse
     </x-table>
+
+    <x-basic-modal id="add-modal">
+        <form action="{{ route('doctor-category.store') }}" method="POST" class="space-y-6">
+            @csrf
+            <x-input id="name" label="Nama" name="name" type="text" required />
+            <x-primary-button type="submit">Simpan</x-primary-button>
+        </form>
+    </x-basic-modal>
+
     <x-basic-modal id="edit-modal">
         <form action="" method="POST" class="space-y-6">
             @csrf
@@ -47,6 +57,8 @@
             <x-primary-button type="submit">Simpan</x-primary-button>
         </form>
     </x-basic-modal>
+
+    <x-delete-modal id="delete-modal" />
 
     @push('js-internal')
         <script>
@@ -58,6 +70,17 @@
                 modal.find('form').attr('action', url);
                 modal.find('#name').val(name);
             }
+
+            function btnDelete(id, name) {
+                const modal = $('#delete-modal');
+                modal.find('.deleted-item').text(name);
+                let url = "{{ route('doctor-category.destroy', ':id') }}";
+                url = url.replace(':id', id);
+                modal.find('form').attr('action', url);
+                modal.find('.modal-body').text(`Apakah anda yakin ingin menghapus kategori dokter ${name}?`);
+            }
+
+            @include('vendor.alert')
         </script>
     @endpush
 </x-app-layout>

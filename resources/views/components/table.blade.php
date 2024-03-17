@@ -1,4 +1,4 @@
-@props(['id' => '', 'label', 'columns' => [], 'data' => []])
+@props(['id' => '', 'label', 'columns' => [], 'data' => [], 'createModalId' => ''])
 
 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 py-12">
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -29,6 +29,7 @@
                         <div
                             class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
                             <button type="button"
+                                @if ($createModalId != '') data-modal-toggle="{{ $createModalId }}" data-modal-target="{{ $createModalId }}" @endif
                                 class="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
                                 <svg class="h-3.5 w-3.5 mr-2" fill="currentColor" viewbox="0 0 20 20"
                                     xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -98,7 +99,7 @@
                                 </li>
                             @endforeach
                             <li>
-                                {{-- <a href="{{ $item->nextPageUrl() }}"
+                                <a href="{{ $data->nextPageUrl() }}"
                                     class="flex items-center justify-center h-full py-1.5 px-3 -ml-px text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
                                     <span class="sr-only">Next</span>
                                     <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewbox="0 0 20 20"
@@ -107,7 +108,7 @@
                                             d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
                                             clip-rule="evenodd" />
                                     </svg>
-                                </a> --}}
+                                </a>
                             </li>
                         </ul>
                     </nav>

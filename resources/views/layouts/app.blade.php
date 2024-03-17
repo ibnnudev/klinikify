@@ -39,19 +39,15 @@
 
     <script src="{{ asset('js/js-snackbar.js') }}"></script>
     <script>
-        @if (Session::has('success'))
-            SnackBar({
-                message: '{{ Session::get('success') }}',
-                status: 'success',
+        $(function() {
+            $('input#simple-search').on('input', function() {
+                const value = $(this).val().toLowerCase();
+                $('table tbody tr').filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+                });
             });
-        @elseif (Session::has('error'))
-            SnackBar({
-                message: '{{ Session::get('error') }}',
-                status: 'error',
-            });
-        @endif
+        });
     </script>
-
     @stack('js-internal')
 </body>
 

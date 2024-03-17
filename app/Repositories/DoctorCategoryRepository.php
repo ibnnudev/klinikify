@@ -16,7 +16,12 @@ class DoctorCategoryRepository implements DoctorCategoryInterface
 
     public function getAll()
     {
-        return $this->doctorCategory->paginate(10);
+        return $this->doctorCategory->all();
+    }
+
+    public function getWithPagination()
+    {
+        return $this->doctorCategory->orderBy('id')->paginate(10);
     }
 
     public function getById($id)
@@ -26,7 +31,7 @@ class DoctorCategoryRepository implements DoctorCategoryInterface
 
     public function store($data)
     {
-        return $this->doctorCategory->create($data);
+        return $this->doctorCategory->create(['name' => $data['name']]);
     }
 
     public function update($id, $data)

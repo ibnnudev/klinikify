@@ -19,7 +19,7 @@ class User extends Authenticatable
         'gender',
         'age',
         'phone',
-        'role_id'
+        'role_id',
     ];
 
     protected $hidden = [
@@ -34,5 +34,10 @@ class User extends Authenticatable
     public function role()
     {
         return $this->belongsTo(Role::class);
+    }
+
+    public function doctor()
+    {
+        return $this->hasOne(Doctor::class);
     }
 }

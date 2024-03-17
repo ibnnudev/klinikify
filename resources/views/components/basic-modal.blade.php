@@ -22,7 +22,7 @@
                 </button>
             </div>
             <!-- Modal body -->
-            <div class="p-4 md:p-5 space-y-4">
+            <div class="pt-2 px-5 space-y-4 pb-6">
                 {{ $slot }}
             </div>
             {{-- <!-- Modal footer -->

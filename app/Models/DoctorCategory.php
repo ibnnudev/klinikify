@@ -10,7 +10,7 @@ class DoctorCategory extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name'
+        'name',
     ];
 
     public function doctors()

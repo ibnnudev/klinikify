@@ -10,14 +10,14 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        $roles = ['admin', 'doctor', 'patient'];
-        Role::insert(array_map(fn ($role) => ['name' => $role], $roles));
+        // $roles = ['admin', 'doctor', 'patient'];
+        // Role::insert(array_map(fn ($role) => ['name' => $role], $roles));
 
         User::create([
             'name' => 'Admin',
             'email' => 'admin@mail.com',
             'password' => bcrypt('password'),
-            'role_id' => Role::where('name', 'admin')->first()->id
+            'role_id' => Role::where('name', 'admin')->first()->id,
         ]);
     }
 }

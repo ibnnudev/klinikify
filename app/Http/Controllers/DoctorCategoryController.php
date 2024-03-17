@@ -17,7 +17,7 @@ class DoctorCategoryController extends Controller
 
     public function index()
     {
-        $categories = $this->doctorCategory->getAll();
+        $categories = $this->doctorCategory->getWithPagination();
         return view('admin.doctor_category.index', compact('categories'));
     }
 
@@ -28,7 +28,10 @@ class DoctorCategoryController extends Controller
 
     public function store(Request $request)
     {
-        //
+        $request->validate(['name' => 'required|unique:doctor_categories,name']);
+
+        $this->doctorCategory->store($request->all());
+        return redirect()->route('doctor-category.index')->with('success', 'Kategori dokter baru berhasil dibuat!');
     }
 
     public function show(DoctorCategory $doctorCategory)
@@ -48,11 +51,14 @@ class DoctorCategoryController extends Controller
         ]);
 
         $this->doctorCategory->update($id, $request->all());
-        return redirect()->route('doctor-category.index')->with('success', 'Doctor Category Updated Successfully');
+
+        return redirect()->route('doctor-category.index')->with('success', 'Kategori Dokter Berhasil Diupdate');
     }
 
-    public function destroy(DoctorCategory $doctorCategory)
+    public function destroy($id)
     {
-        //
+        $this->doctorCategory->destroy($id);
+
+        return redirect()->route('doctor-category.index')->with('success', 'Kategori Dokter Berhasil Dihapus');
     }
 }

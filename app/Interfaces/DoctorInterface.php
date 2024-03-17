@@ -2,7 +2,7 @@
 
 namespace App\Interfaces;
 
-interface DoctorCategoryInterface
+interface DoctorInterface
 {
     public function getAll();
     public function getWithPagination();
